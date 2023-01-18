@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/search" element={<Search />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Fragment>
   );
