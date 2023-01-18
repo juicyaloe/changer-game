@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
+import Pc from '../responsive/pc';
+import Mobile from '../responsive/mobile';
 
 const MenuBarWrap = styled.div`
   height: 50px;
@@ -25,29 +27,23 @@ const MenuBarButton = styled(Button)`
 export default function MenuBar() {
   return (
     <MenuBarWrap>
-      {true && (
-        <>
-          <MenuBarButton>Game Changer</MenuBarButton>
-          <MenuBarButton>Best</MenuBarButton>
-          <MenuBarButton>Custom Uniform</MenuBarButton>
-          <MenuBarButton>Product</MenuBarButton>
-          <MenuBarButton>Sale</MenuBarButton>
-          <MenuBarButton>Event</MenuBarButton>
-          <MenuBarButton sx={{ color: 'blue !important' }}>
-            Review
-          </MenuBarButton>
-          <MenuBarButton>Magazine</MenuBarButton>
-        </>
-      )}
-      {false && (
-        <>
-          <MenuBarButton>Best</MenuBarButton>
-          <MenuBarButton>Custom Uniform</MenuBarButton>
-          <IconButton type="button" sx={{ p: '10px', px: '20px' }}>
-            <MenuIcon />
-          </IconButton>
-        </>
-      )}
+      <Pc>
+        <MenuBarButton>Game Changer</MenuBarButton>
+        <MenuBarButton>Best</MenuBarButton>
+        <MenuBarButton>Custom Uniform</MenuBarButton>
+        <MenuBarButton>Product</MenuBarButton>
+        <MenuBarButton>Sale</MenuBarButton>
+        <MenuBarButton>Event</MenuBarButton>
+        <MenuBarButton sx={{ color: 'blue !important' }}>Review</MenuBarButton>
+        <MenuBarButton>Magazine</MenuBarButton>
+      </Pc>
+      <Mobile>
+        <MenuBarButton>Best</MenuBarButton>
+        <MenuBarButton>Custom Uniform</MenuBarButton>
+        <IconButton type="button" sx={{ p: '10px', px: '20px' }}>
+          <MenuIcon />
+        </IconButton>
+      </Mobile>
     </MenuBarWrap>
   );
 }

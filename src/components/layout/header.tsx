@@ -9,6 +9,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import Pc from '../responsive/pc';
+import Mobile from '../responsive/mobile';
 
 const HeaderWrap = styled.div`
   height: 50px;
@@ -47,22 +49,28 @@ export default function Header() {
 
   return (
     <HeaderWrap>
-      <HeaderMainText variant="h6">Game Changer</HeaderMainText>
+      <Pc>
+        <HeaderMainText variant="h6">Game Changer</HeaderMainText>
+      </Pc>
+      <Mobile>
+        <HeaderMainText variant="subtitle1">Game Changer</HeaderMainText>
+      </Mobile>
+      <Pc>
+        <SearchBarWrap>
+          <Input
+            value={currentText}
+            placeholder="검색"
+            onChange={(e) => setText(e.target.value)}
+          />
 
-      <SearchBarWrap>
-        <Input
-          value={currentText}
-          placeholder="검색"
-          onChange={(e) => setText(e.target.value)}
-        />
-        <IconButton
-          type="button"
-          onClick={() => navigate(`/search?w=${currentText}`)}
-        >
-          <SearchIcon />
-        </IconButton>
-      </SearchBarWrap>
-
+          <IconButton
+            type="button"
+            onClick={() => navigate(`/search?w=${currentText}`)}
+          >
+            <SearchIcon />
+          </IconButton>
+        </SearchBarWrap>
+      </Pc>
       <SideButtonWrap>
         <IconButton type="button">
           <PersonIcon />
