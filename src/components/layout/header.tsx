@@ -55,6 +55,7 @@ export default function Header() {
       <Mobile>
         <HeaderMainText variant="subtitle1">Game Changer</HeaderMainText>
       </Mobile>
+
       <Pc>
         <SearchBarWrap>
           <Input
@@ -71,6 +72,7 @@ export default function Header() {
           </IconButton>
         </SearchBarWrap>
       </Pc>
+
       <SideButtonWrap>
         <IconButton type="button">
           <PersonIcon />
