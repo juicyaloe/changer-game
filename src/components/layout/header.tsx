@@ -1,15 +1,14 @@
-import styled from '@emotion/styled';
 import Typography from '@mui/material/Typography';
-
-import Input from '@mui/material/Input';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import Pc from '../responsive/pc';
+
+import styled from '@emotion/styled';
+
+import SearchBar from '../common/searchBar';
+
+import PC from '../responsive/pc';
 import Mobile from '../responsive/mobile';
 
 const HeaderWrap = styled.div`
@@ -18,67 +17,76 @@ const HeaderWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const HeaderMainText = styled(Typography)`
-  align-self: center;
-
   margin: 0 50px;
-
   white-space: nowrap;
 `;
 
 const SearchBarWrap = styled.div`
+  flex-grow: 1;
+
+  align-self: flex-end;
   white-space: nowrap;
 `;
 
 const SideButtonWrap = styled.div`
-  margin-left: auto;
-  margin-right: 10px;
+  flex-grow: 1;
+  text-align: right;
 
-  display: flex;
-  gap: 10px;
+  & .MuiButtonBase-root {
+    margin: 5px;
+  }
 
   white-space: nowrap;
 `;
 
-export default function Header() {
-  const navigate = useNavigate();
-  const [currentText, setText] = useState<string>('');
+const PCButton = () => {
+  return (
+    <SideButtonWrap>
+      <IconButton type="button">
+        <PersonIcon />
+      </IconButton>
+      <IconButton type="button">
+        <ShoppingCartIcon />
+      </IconButton>
+    </SideButtonWrap>
+  );
+};
 
+const MobileButton = () => {
+  return (
+    <SideButtonWrap>
+      <IconButton type="button">
+        <SearchIcon />
+      </IconButton>
+      <IconButton type="button">
+        <PersonIcon />
+      </IconButton>
+      <IconButton type="button">
+        <ShoppingCartIcon />
+      </IconButton>
+    </SideButtonWrap>
+  );
+};
+
+export default function Header() {
   return (
     <HeaderWrap>
-      <Pc>
+      <PC>
         <HeaderMainText variant="h6">Game Changer</HeaderMainText>
-      </Pc>
+        <SearchBarWrap>
+          <SearchBar />
+        </SearchBarWrap>
+        <PCButton />
+      </PC>
+
       <Mobile>
         <HeaderMainText variant="subtitle1">Game Changer</HeaderMainText>
+        <MobileButton />
       </Mobile>
-      <Pc>
-        <SearchBarWrap>
-          <Input
-            value={currentText}
-            placeholder="검색"
-            onChange={(e) => setText(e.target.value)}
-          />
-
-          <IconButton
-            type="button"
-            onClick={() => navigate(`/search?w=${currentText}`)}
-          >
-            <SearchIcon />
-          </IconButton>
-        </SearchBarWrap>
-      </Pc>
-      <SideButtonWrap>
-        <IconButton type="button">
-          <PersonIcon />
-        </IconButton>
-        <IconButton type="button">
-          <ShoppingCartIcon />
-        </IconButton>
-      </SideButtonWrap>
     </HeaderWrap>
   );
 }
