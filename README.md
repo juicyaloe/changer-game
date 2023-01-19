@@ -10,4 +10,4 @@ https://changer-game.com
 
 ### 참여자
 
-Kim min-jae(juicyaloe)
+Kim min-jae (juicyaloe)
