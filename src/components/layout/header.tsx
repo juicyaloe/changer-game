@@ -29,6 +29,8 @@ const HeaderImg = styled.img`
 const SearchBarWrap = styled.div`
   flex-grow: 1;
 
+  margin-left: 25px;
+
   align-self: flex-end;
   white-space: nowrap;
 `;
