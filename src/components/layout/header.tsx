@@ -20,9 +20,10 @@ const HeaderWrap = styled.div`
   align-items: center;
 `;
 
-const HeaderMainText = styled(Typography)`
-  margin: 0 50px;
-  white-space: nowrap;
+const HeaderImg = styled.img`
+  align-self: flex-start;
+
+  padding: 0 50px;
 `;
 
 const SearchBarWrap = styled.div`
@@ -76,7 +77,7 @@ export default function Header() {
   return (
     <HeaderWrap>
       <PC>
-        <HeaderMainText variant="h6">Game Changer</HeaderMainText>
+        <HeaderImg src="/header/game_changer.png" alt="메인" />
         <SearchBarWrap>
           <SearchBar />
         </SearchBarWrap>
@@ -84,7 +85,7 @@ export default function Header() {
       </PC>
 
       <Mobile>
-        <HeaderMainText variant="subtitle1">Game Changer</HeaderMainText>
+        <HeaderImg src="/header/game_changer.png" alt="메인" />
         <MobileButton />
       </Mobile>
     </HeaderWrap>
