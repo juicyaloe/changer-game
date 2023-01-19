@@ -67,7 +67,7 @@ interface MenuBarDetailButtonDataType {
 
 export default function MenuBar() {
   const navigate = useNavigate();
-  const [currentIndex, setCurrentIndex] = useState<number>(1);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
 
   const MenuBarButtonData: MenuBarButtonDataType[] = [
     {
