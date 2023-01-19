@@ -13,8 +13,9 @@ export default function SearchBar() {
   return (
     <Fragment>
       <Input
+        sx={{ pl: '5px' }}
         value={currentText}
-        placeholder="검색"
+        placeholder="Search"
         onChange={(e) => setText(e.target.value)}
       />
 

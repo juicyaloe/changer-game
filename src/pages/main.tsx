@@ -1,15 +1,16 @@
+import Container from '../components/layout/container';
 import Header from '../components/layout/header';
 import MenuBar from '../components/layout/menuBar';
-import BestItems from '../pages-components/main/bestItems';
-import MainImage from '../pages-components/main/mainImage';
+import TopSlider from '../pages-components/main/topSlider';
+import WeeklyBest from '../pages-components/main/weeklyBest';
 
 export default function Main() {
   return (
-    <>
+    <Container>
       <Header />
       <MenuBar />
-      <MainImage src="https://placeimg.com/500/100" alt="이미지" />
-      <BestItems />
-    </>
+      <TopSlider />
+      <WeeklyBest />
+    </Container>
   );
 }
