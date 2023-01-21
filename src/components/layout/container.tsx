@@ -1,9 +1,10 @@
-import { ReactNode } from 'react';
-import styled from '@emotion/styled';
+import { ReactNode } from "react";
+import styled from "@emotion/styled";
 
 const ContainerWrap = styled.div`
   margin: 0 auto;
   width: 95%;
+  min-width: 320px;
 
   @media screen and (min-width: 769px) {
     width: 80%;
