@@ -23,7 +23,9 @@ const StyledBox = styled(Box)`
   gap: 20px;
 `;
 
-const SearchBarWrap = styled.div``;
+const SearchBarWrap = styled.div`
+  white-space: nowrap;
+`;
 
 export default function TopBar() {
   const isActive = useSelector((state: RootState) => state.topBar.isActive);
@@ -53,7 +55,7 @@ export default function TopBar() {
         onClick={closeDrawer}
         onKeyDown={closeDrawer}
       >
-        <Typography>검색: </Typography>
+        <Typography sx={{ whiteSpace: "nowrap" }}>검색: </Typography>
         <SearchBarWrap>
           <SearchBar />
         </SearchBarWrap>
