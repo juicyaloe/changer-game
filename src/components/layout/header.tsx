@@ -13,6 +13,7 @@ import SearchBar from "../common/searchBar";
 import PC from "../responsive/pc";
 import Mobile from "../responsive/mobile";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const HeaderWrap = styled.div`
   height: 50px;
@@ -81,10 +82,16 @@ const MobileButton = () => {
 };
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <HeaderWrap>
       <PC>
-        <HeaderImg src='/header/game_changer.png' alt='메인' />
+        <HeaderImg
+          onClick={() => navigate("/")}
+          src='/header/game_changer.png'
+          alt='메인'
+        />
         <SearchBarWrap>
           <SearchBar />
         </SearchBarWrap>
@@ -92,7 +99,11 @@ export default function Header() {
       </PC>
 
       <Mobile>
-        <HeaderImg src='/header/game_changer.png' alt='메인' />
+        <HeaderImg
+          onClick={() => navigate("/")}
+          src='/header/game_changer.png'
+          alt='메인'
+        />
         <MobileButton />
       </Mobile>
     </HeaderWrap>
