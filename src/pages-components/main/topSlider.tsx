@@ -13,7 +13,7 @@ const TopSliderContainer = styled.div`
 
 const StyledSlider = styled(Slider)`
   .slick-list {
-    width: 80%;
+    width: 100%;
     height: auto;
 
     margin: 0 auto;
@@ -24,7 +24,11 @@ const StyledSlider = styled(Slider)`
   }
 
   .slick-dots {
-    bottom: -30px;
+    bottom: -15px;
+
+    @media screen and (min-width: 769px) {
+      bottom: -30px;
+    }
   }
 
   .slick-track {
@@ -52,11 +56,11 @@ export default function TopSlider() {
       <StyledSlider {...settings}>
         <TopSliderContent
           text={`국가대표가\n착용하는\nGame Changer`}
-          src="https://placeimg.com/200/200"
+          src="https://placeimg.com/200/150"
         />
         <TopSliderContent
           text={`남녀노소\n착용하는\nGame Changer`}
-          src="https://placeimg.com/200/200"
+          src="https://placeimg.com/200/150"
         />
       </StyledSlider>
     </TopSliderContainer>

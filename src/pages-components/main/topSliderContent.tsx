@@ -1,20 +1,21 @@
 import styled from "@emotion/styled";
+import Mobile from "../../components/responsive/mobile";
+import PC from "../../components/responsive/pc";
 
-const SliderContent = styled.div`
+const PCSliderContent = styled.div`
   width: 100%;
   height: auto;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 `;
 
-const SliderText = styled.span`
+const PCSliderText = styled.span`
   flex-basis: 30%;
-  padding: 0 20px;
+  padding-right: 20px;
 
-  word-break: break-all;
   white-space: pre;
 
   text-align: center;
@@ -22,10 +23,43 @@ const SliderText = styled.span`
   font-weight: bold;
 `;
 
-const SliderImg = styled.img`
+const PCSliderImg = styled.img`
   flex-basis: 70%;
 
+  width: 100%;
+  max-width: 275px;
+
   border-radius: 20px;
+
+  cursor: pointer;
+`;
+
+const MobileSliderContent = styled.div`
+  width: 95%;
+  height: auto;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MobileSliderText = styled.span`
+  white-space: nowrap;
+
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: bold;
+`;
+
+const MobileSliderImg = styled.img`
+  width: 70%;
+
+  margin: 15px;
+
+  border-radius: 15px;
 
   cursor: pointer;
 `;
@@ -42,9 +76,19 @@ export default function TopSliderContent({
   alt = "",
 }: TopSliderContentType) {
   return (
-    <SliderContent>
-      <SliderText>{text}</SliderText>
-      <SliderImg src={src} alt={alt} />
-    </SliderContent>
+    <>
+      <PC>
+        <PCSliderContent>
+          <PCSliderText>{text}</PCSliderText>
+          <PCSliderImg src={src} alt={alt} />
+        </PCSliderContent>
+      </PC>
+      <Mobile>
+        <MobileSliderContent>
+          <MobileSliderText>{text}</MobileSliderText>
+          <MobileSliderImg src={src} alt={alt} />
+        </MobileSliderContent>
+      </Mobile>
+    </>
   );
 }
