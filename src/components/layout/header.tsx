@@ -1,15 +1,18 @@
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import PersonIcon from '@mui/icons-material/Person';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { open } from "../../store/topBarSlice";
 
-import styled from '@emotion/styled';
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
+import PersonIcon from "@mui/icons-material/Person";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-import SearchBar from '../common/searchBar';
+import styled from "@emotion/styled";
 
-import PC from '../responsive/pc';
-import Mobile from '../responsive/mobile';
+import SearchBar from "../common/searchBar";
+
+import PC from "../responsive/pc";
+import Mobile from "../responsive/mobile";
+import { useDispatch } from "react-redux";
 
 const HeaderWrap = styled.div`
   height: 50px;
@@ -49,10 +52,10 @@ const SideButtonWrap = styled.div`
 const PCButton = () => {
   return (
     <SideButtonWrap>
-      <IconButton type="button">
+      <IconButton type='button'>
         <PersonIcon />
       </IconButton>
-      <IconButton type="button">
+      <IconButton type='button'>
         <ShoppingCartIcon />
       </IconButton>
     </SideButtonWrap>
@@ -60,15 +63,17 @@ const PCButton = () => {
 };
 
 const MobileButton = () => {
+  const dispatch = useDispatch();
+
   return (
     <SideButtonWrap>
-      <IconButton type="button">
+      <IconButton type='button' onClick={() => dispatch(open())}>
         <SearchIcon />
       </IconButton>
-      <IconButton type="button">
+      <IconButton type='button'>
         <PersonIcon />
       </IconButton>
-      <IconButton type="button">
+      <IconButton type='button'>
         <ShoppingCartIcon />
       </IconButton>
     </SideButtonWrap>
@@ -79,7 +84,7 @@ export default function Header() {
   return (
     <HeaderWrap>
       <PC>
-        <HeaderImg src="/header/game_changer.png" alt="메인" />
+        <HeaderImg src='/header/game_changer.png' alt='메인' />
         <SearchBarWrap>
           <SearchBar />
         </SearchBarWrap>
@@ -87,7 +92,7 @@ export default function Header() {
       </PC>
 
       <Mobile>
-        <HeaderImg src="/header/game_changer.png" alt="메인" />
+        <HeaderImg src='/header/game_changer.png' alt='메인' />
         <MobileButton />
       </Mobile>
     </HeaderWrap>
