@@ -19,11 +19,12 @@ const StyledBox = styled(Box)`
   align-items: center;
 
   padding: 5px 0;
-
-  gap: 20px;
+  gap: 10px;
 `;
 
-const SearchBarWrap = styled.div`
+const SearchBarWrap = styled.span`
+  width: 200px;
+
   white-space: nowrap;
 `;
 
@@ -45,7 +46,6 @@ export default function TopBar() {
     }
 
     dispatch(close());
-    console.log("ehlsemt");
   };
 
   return (
