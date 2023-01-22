@@ -51,12 +51,14 @@ const SideButtonWrap = styled.div`
 `;
 
 const PCButton = () => {
+  const navigate = useNavigate();
+
   return (
     <SideButtonWrap>
-      <IconButton type='button'>
+      <IconButton type='button' onClick={() => navigate("/mypage")}>
         <PersonIcon />
       </IconButton>
-      <IconButton type='button'>
+      <IconButton type='button' onClick={() => navigate("/cart")}>
         <ShoppingCartIcon />
       </IconButton>
     </SideButtonWrap>
@@ -65,16 +67,17 @@ const PCButton = () => {
 
 const MobileButton = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <SideButtonWrap>
       <IconButton type='button' onClick={() => dispatch(open())}>
         <SearchIcon />
       </IconButton>
-      <IconButton type='button'>
+      <IconButton type='button' onClick={() => navigate("/mypage")}>
         <PersonIcon />
       </IconButton>
-      <IconButton type='button'>
+      <IconButton type='button' onClick={() => navigate("/cart")}>
         <ShoppingCartIcon />
       </IconButton>
     </SideButtonWrap>
@@ -87,11 +90,13 @@ export default function Header() {
   return (
     <HeaderWrap>
       <PC>
-        <HeaderImg
-          onClick={() => navigate("/")}
-          src='/header/game_changer.png'
-          alt='메인'
-        />
+        <IconButton type='button'>
+          <HeaderImg
+            onClick={() => navigate("/")}
+            src='/header/game_changer.png'
+            alt='메인'
+          />
+        </IconButton>
         <SearchBarWrap>
           <SearchBar />
         </SearchBarWrap>
@@ -99,11 +104,13 @@ export default function Header() {
       </PC>
 
       <Mobile>
-        <HeaderImg
-          onClick={() => navigate("/")}
-          src='/header/game_changer.png'
-          alt='메인'
-        />
+        <IconButton type='button'>
+          <HeaderImg
+            onClick={() => navigate("/")}
+            src='/header/game_changer.png'
+            alt='메인'
+          />
+        </IconButton>
         <MobileButton />
       </Mobile>
     </HeaderWrap>

@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import styled from '@emotion/styled';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-import MenuIcon from '@mui/icons-material/Menu';
+import styled from "@emotion/styled";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import MenuIcon from "@mui/icons-material/Menu";
 
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
 
-import Divider from '@mui/material/Divider';
-import { useNavigate } from 'react-router-dom';
-import PC from '../responsive/pc';
-import Mobile from '../responsive/mobile';
+import Divider from "@mui/material/Divider";
+import { useNavigate } from "react-router-dom";
+import PC from "../responsive/pc";
+import Mobile from "../responsive/mobile";
+import Typography from "@mui/material/Typography";
 
 const MenuBarWrap = styled.div`
   height: 50px;
@@ -71,65 +72,168 @@ export default function MenuBar() {
 
   const MenuBarButtonData: MenuBarButtonDataType[] = [
     {
-      title: 'Game Changer',
-      onClickFunc: () => {},
+      title: "Game Changer",
+      onClickFunc: () => {
+        navigate("/gc");
+      },
       detailData: [
-        { title: 'About us', onClickFunc: () => {} },
         {
-          title: 'Look Book',
-          onClickFunc: () => {},
+          title: "About us",
+          onClickFunc: () => {
+            navigate("/gc/aboutus");
+          },
+        },
+        {
+          title: "Look Book",
+          onClickFunc: () => {
+            navigate("/gc/lookbook");
+          },
         },
       ],
     },
     {
-      title: 'Custom Uniform',
-      onClickFunc: () => {},
+      title: "Custom Uniform",
+      onClickFunc: () => {
+        navigate("/custom");
+      },
       detailData: [
-        { title: 'uniform', onClickFunc: () => {} },
-        { title: 'windbreaker', onClickFunc: () => {} },
-        { title: 'trainning', onClickFunc: () => {} },
-        { title: 'vest', onClickFunc: () => {} },
-        { title: 'pinnie', onClickFunc: () => {} },
+        {
+          title: "uniform",
+          onClickFunc: () => {
+            navigate("/custom/uniform");
+          },
+        },
+        {
+          title: "windbreaker",
+          onClickFunc: () => {
+            navigate("/custom/wb");
+          },
+        },
+        {
+          title: "trainning",
+          onClickFunc: () => {
+            navigate("/custom/tranning");
+          },
+        },
+        {
+          title: "vest",
+          onClickFunc: () => {
+            navigate("/custom/vest");
+          },
+        },
+        {
+          title: "pinnie",
+          onClickFunc: () => {
+            navigate("/custom/pinnie");
+          },
+        },
       ],
     },
     {
-      title: 'Product',
-      onClickFunc: () => {},
+      title: "Product",
+      onClickFunc: () => {
+        navigate("/product");
+      },
       detailData: [
-        { title: 'top', onClickFunc: () => {} },
-        { title: 'pants', onClickFunc: () => {} },
-        { title: 'outer', onClickFunc: () => {} },
-        { title: 'under', onClickFunc: () => {} },
-        { title: 'etc', onClickFunc: () => {} },
+        {
+          title: "top",
+          onClickFunc: () => {
+            navigate("/product/top");
+          },
+        },
+        {
+          title: "pants",
+          onClickFunc: () => {
+            navigate("/product/pants");
+          },
+        },
+        {
+          title: "outer",
+          onClickFunc: () => {
+            navigate("/product/outer");
+          },
+        },
+        {
+          title: "under",
+          onClickFunc: () => {
+            navigate("/product/under");
+          },
+        },
+        {
+          title: "etc",
+          onClickFunc: () => {
+            navigate("/product/etc");
+          },
+        },
       ],
     },
-    { title: 'Event', onClickFunc: () => {}, detailData: [] },
-    { title: 'Review', onClickFunc: () => {}, detailData: [] },
-    { title: 'Magazine', onClickFunc: () => {}, detailData: [] },
+    {
+      title: "Event",
+      onClickFunc: () => {
+        navigate("/event");
+      },
+      detailData: [],
+    },
+    {
+      title: "Review",
+      onClickFunc: () => {
+        navigate("/review");
+      },
+      detailData: [],
+    },
+    {
+      title: "Magazine",
+      onClickFunc: () => {
+        navigate("/magazine");
+      },
+      detailData: [],
+    },
   ];
 
   return (
     <>
       <PC>
         <MenuBarWrap>
-          {MenuBarButtonData.map((item, i) => (
+          {MenuBarButtonData.filter((_, i) => i < 3).map((item, i) => (
             <MenuBarButton
               sx={{
-                '&:hover': {
-                  background: 'inherit',
+                "&:hover": {
+                  background: "inherit",
                 },
-                '& > .MuiTouchRipple-root': {
-                  display: 'none',
+                "& > .MuiTouchRipple-root": {
+                  display: "none",
                 },
               }}
               key={i}
-              onClick={item.onClickFunc}
               onMouseEnter={() => setCurrentIndex(i)}
               onMouseLeave={() => setCurrentIndex(-1)}
             >
+              <span onClick={item.onClickFunc}>{item.title}</span>
+
+              {currentIndex === i && item.detailData.length !== 0 && (
+                <Panel sx={{ width: "120%", bgcolor: "background.paper" }}>
+                  {item.detailData.map((detailItem, i) => (
+                    <>
+                      <PanelButton onClick={detailItem.onClickFunc}>
+                        {detailItem.title}
+                      </PanelButton>
+                      {i + 1 !== item.detailData.length && <Divider />}
+                    </>
+                  ))}
+                </Panel>
+              )}
+            </MenuBarButton>
+          ))}
+          {MenuBarButtonData.filter((_, i) => i >= 3).map((item, i) => (
+            <MenuBarButton
+              key={i + 3}
+              onClick={item.onClickFunc}
+              // onMouseEnter={() => setCurrentIndex(i + 3)}
+              // onMouseLeave={() => setCurrentIndex(-1)}
+            >
               {item.title}
               {currentIndex === i && item.detailData.length !== 0 && (
-                <Panel sx={{ width: '120%', bgcolor: 'background.paper' }}>
+                <Panel sx={{ width: "120%", bgcolor: "background.paper" }}>
                   {item.detailData.map((detailItem, i) => (
                     <>
                       <PanelButton onClick={detailItem.onClickFunc}>
