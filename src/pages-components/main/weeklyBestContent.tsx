@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 const WeeklyBestContentWrap = styled.div`
   padding-top: 20px;
@@ -20,7 +20,7 @@ interface WeeklyBestContentType {
 
 export default function WeeklyBestContent({
   src,
-  alt = "",
+  alt = '',
 }: WeeklyBestContentType) {
   return (
     <WeeklyBestContentWrap>
