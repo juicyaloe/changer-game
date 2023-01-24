@@ -13,6 +13,10 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@master
 
+      - name: Setting .env
+        run: |
+          echo "REACT_APP_API_DOMAIN=${{ secrets.REACT_APP_API_DOMAIN }}" >> .env
+
       - name: Cache node modules
         uses: actions/cache@v1
         with:

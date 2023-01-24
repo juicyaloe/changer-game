@@ -1,11 +1,12 @@
-import Slider from "react-slick";
+import Slider from 'react-slick';
 
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import WeeklyBestContent from "./weeklyBestContent";
-import { useMediaQuery } from "react-responsive";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import WeeklyBestContent from './weeklyBestContent';
+import { useMediaQuery } from 'react-responsive';
+import { useEffect, useState } from 'react';
 
 const WeeklyBestWrap = styled.div`
   padding-top: 35px;
@@ -40,20 +41,39 @@ const StyledSlider = styled(Slider)`
   }
 `;
 
+function fetchImgList() {
+  return fetch(process.env.REACT_APP_API_DOMAIN + '/wb/');
+}
+
 export default function WeeklyBest() {
+  const [list, setlist] = useState<any[]>([]);
+  console.log('list: ', list);
+
+  useEffect(() => {
+    fetchImgList()
+      .then((response) => {
+        response
+          .json()
+          .then((json) => {
+            setlist(json);
+          })
+          .catch((err) => {});
+      })
+      .catch((err) => {});
+  }, []);
   const isSmall = useMediaQuery({
     // 2개
-    query: "(max-width:450px)",
+    query: '(max-width:450px)',
   });
 
   const isMiddle = useMediaQuery({
     // 3개
-    query: "(max-width:600px)",
+    query: '(max-width:600px)',
   });
 
   const isBig = useMediaQuery({
     // 4개
-    query: "(max-width:900px)",
+    query: '(max-width:900px)',
   });
 
   const currentShowLevel = isSmall ? 2 : isMiddle ? 3 : isBig ? 4 : 5;
@@ -64,10 +84,11 @@ export default function WeeklyBest() {
     speed: 1000,
     autoplay: true,
     autoplaySpeed: 5000,
-    slidesToShow: currentShowLevel,
+    slidesToShow:
+      currentShowLevel > list.length ? list.length : currentShowLevel,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: "0px",
+    centerPadding: '0px',
     nextArrow: <></>,
     prevArrow: <></>,
   };
@@ -76,12 +97,9 @@ export default function WeeklyBest() {
     <WeeklyBestWrap>
       <WeeklyBestText>Weekly Best</WeeklyBestText>
       <StyledSlider {...settings}>
-        <WeeklyBestContent src='https://placeimg.com/150/150' />
-        <WeeklyBestContent src='https://placeimg.com/150/150' />
-        <WeeklyBestContent src='https://placeimg.com/150/150' />
-        <WeeklyBestContent src='https://placeimg.com/150/150' />
-        <WeeklyBestContent src='https://placeimg.com/150/150' />
-        <WeeklyBestContent src='https://placeimg.com/150/150' />
+        {list.map((item) => (
+          <WeeklyBestContent key={item.id} src={item.image} />
+        ))}
       </StyledSlider>
     </WeeklyBestWrap>
   );
