@@ -1,6 +1,9 @@
-export function controlError(response: Response, success_code: number = 200) {
+export async function controlError(
+  response: Response,
+  success_code: number = 200
+) {
   if (response.status === success_code) {
-    return response.json();
+    return await response.json();
   }
 
   if (response.status === 401) {
