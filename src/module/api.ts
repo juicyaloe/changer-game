@@ -18,6 +18,43 @@ export async function login(userid: string, password: string) {
   return controlError(response);
 }
 
+export async function signup(
+  userid: string,
+  password: string,
+  name: string,
+  address: string,
+  phone: string,
+  phone_check: boolean,
+  email: string,
+  email_check: boolean,
+  date_of_birth: string,
+  level: string
+) {
+  const response = await fetch(
+    process.env.REACT_APP_API_DOMAIN + '/auth/signup/',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userid,
+        password,
+        name,
+        address,
+        phone,
+        phone_check,
+        email,
+        email_check,
+        date_of_birth,
+        level,
+      }),
+    }
+  );
+
+  return controlError(response, 201);
+}
+
 export async function fetchImgList() {
   const response = await fetch(process.env.REACT_APP_API_DOMAIN + '/wb/');
   return controlError(response);

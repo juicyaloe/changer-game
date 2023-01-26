@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { login } from '../module/api';
+import { useNavigate } from 'react-router-dom';
 
 const LoginWrap = styled.div`
   padding-top: 150px;
@@ -54,12 +55,14 @@ const CustomButton = styled(Button)`
 `;
 
 export default function Login() {
+  const navigate = useNavigate();
   const [id, setId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   const [errorPostion, setErrorPostion] = useState<string>('none');
   const [errorMsg, setErrorMsg] = useState<string>('');
 
+  // TODO: 메시지 제거
   const [successMsg, setSuccessMsg] = useState<string>('로그인 되어 있지 않음');
 
   const validation = () => {
@@ -119,7 +122,9 @@ export default function Login() {
           variant="standard"
         />
         <BottomButtonWrap>
-          <CustomButton variant="outlined">회원가입</CustomButton>
+          <CustomButton variant="outlined" onClick={() => navigate('/signup')}>
+            회원가입
+          </CustomButton>
           <CustomButton variant="outlined" onClick={loginButtonClicked}>
             로그인
           </CustomButton>

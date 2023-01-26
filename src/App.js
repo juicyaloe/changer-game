@@ -27,6 +27,7 @@ import Review from './pages/review';
 import MyPage from './pages/mypage';
 import Cart from './pages/cart';
 import Login from './pages/login';
+import SignUp from './pages/signup';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
 
         <Route path="/gc">
