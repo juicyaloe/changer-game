@@ -5,16 +5,36 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface PopupState {
   isActive: boolean;
+  title: string;
+  content: string;
+  navigateUrl?: string;
 }
 
-const initialState = { isActive: false } as PopupState;
+const initialState = {
+  isActive: false,
+  title: '알림',
+  content: `일시적인 오류가 발생했습니다.\n잠시 후에 시도해주세요.`,
+  navigateUrl: undefined,
+} as PopupState;
 
 const popupSlice = createSlice({
   name: 'popup',
   initialState,
   reducers: {
-    open(state) {
+    open(
+      state,
+      action: PayloadAction<{
+        title?: string;
+        content?: string;
+        navigateUrl?: string;
+      }>
+    ) {
       state.isActive = true;
+      state.title = action.payload.title ?? '알림';
+      state.content =
+        action.payload.content ??
+        `일시적인 오류가 발생했습니다.\n잠시 후에 시도해주세요.`;
+      state.navigateUrl = action.payload.navigateUrl;
     },
     close(state) {
       state.isActive = false;
