@@ -1,20 +1,22 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { signup } from '../../module/api';
+
+import { open, close } from '../../store/popupSlice';
+
 import BasicStructure from '../../components/structure/basicStructure';
-import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import { useState } from 'react';
 
-import { signup } from '../../module/api';
-import { useNavigate } from 'react-router-dom';
-
-import DaumPostcode from 'react-daum-postcode';
+import NormalTextField from '../../components/common/normalTextField';
+import { useDispatch } from 'react-redux';
 
 const SignUpWrap = styled.div`
   width: 100%;
   padding-top: 10px;
-  margin-left: 15px;
 
   display: flex;
   flex-direction: column;
@@ -34,29 +36,25 @@ const SignUpText = styled.span`
 const RowWrap = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
-
-  gap: 20px;
 `;
 
-const CheckBoxWrap = styled.div`
+const SignupButton = styled(Button)`
   align-self: flex-end;
-`;
-
-const CustomButton = styled(Button)`
-  align-self: center;
-  margin-top: 20px;
 `;
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [id, setId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
+
   const [name, setName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [address, setAddress] = useState<string>('');
+  const [detailAddress, setDetailAddress] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [birth, setBirth] = useState<string>('');
   const [level, setLevel] = useState<string>('');
@@ -64,30 +62,117 @@ export default function SignUp() {
   const [phoneCheck, setPhoneCheck] = useState<boolean>(false);
   const [emailCheck, setEmailCheck] = useState<boolean>(false);
 
-  // TODO: 메시지 제거
-  const [msg, setmsg] = useState<string>('회원가입 테스트 메시지');
+  const validation = (): boolean => {
+    const phoneReg = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    const emailReg =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    const dateReg = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/;
 
-  const [postopen, setpostopen] = useState<boolean>(false);
+    const popupAction = () => {
+      console.log('id');
+      dispatch(close());
+    };
 
-  const signUpButtonClicked = () => {
-    signup(
-      id,
-      password,
-      name,
-      address,
-      phone,
-      phoneCheck,
-      email,
-      emailCheck,
-      birth,
-      level
-    )
-      .then((json) => {
-        navigate('/login');
-      })
-      .catch((err: Error) => {
-        setmsg(err.message);
-      });
+    if (id.length < 3) {
+      dispatch(open({ content: '아이디를 3자 이상 입력해주세요.' }));
+      return false;
+    } else if (password.length < 8) {
+      dispatch(open({ content: '비밀번호를 8자 이상 입력해주세요.' }));
+      return false;
+    } else if (password !== password2) {
+      dispatch(open({ content: '비밀번호가 일치하지 않습니다.' }));
+      return false;
+    } else if (name.length < 2) {
+      dispatch(open({ content: '이름을 입력해 주세요.' }));
+      return false;
+    } else if (!phoneReg.test(phone)) {
+      dispatch(open({ content: '올바른 핸드폰 번호를 입력해 주세요.' }));
+      return false;
+    } else if (address.length < 1) {
+      dispatch(open({ content: '주소를 선택해 주세요.' }));
+      return false;
+    } else if (detailAddress.length < 1) {
+      dispatch(open({ content: '상세 주소를 입력해 주세요.' }));
+      return false;
+    } else if (!emailReg.test(email)) {
+      dispatch(open({ content: '올바른 이메일을 입력해 주세요.' }));
+      return false;
+    } else if (!dateReg.test(birth)) {
+      dispatch(open({ content: 'YYYY-MM-DD 형식으로 생일을 입력해 주세요.' }));
+      return false;
+    } else if (level.length < 1) {
+      dispatch(open({ content: '직급을 입력해 주세요.' }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const signupButtonClicked = () => {
+    const isSuccess = validation();
+
+    if (isSuccess) {
+      signup(
+        id,
+        password,
+        name,
+        address + ' ' + detailAddress,
+        phone,
+        phoneCheck,
+        email,
+        emailCheck,
+        birth,
+        level
+      )
+        .then((response) => {
+          dispatch(
+            open({
+              content:
+                '회원가입에 성공했습니다!\n해당 아이디로 로그인 해주세요.',
+              navigateUrl: '/login',
+            })
+          );
+        })
+        .catch((err: Error) => {
+          switch (err.message) {
+            case 'userid':
+              dispatch(
+                open({
+                  content:
+                    '이미 존재하는 아이디입니다.\n다른 아이디를 입력해 주세요.',
+                })
+              );
+              break;
+            case 'phone':
+              dispatch(
+                open({
+                  content:
+                    '이미 가입된 핸드폰 번호입니다.\n다른 핸드폰 번호를 입력해 주세요.',
+                })
+              );
+              break;
+            case 'email':
+              dispatch(
+                open({
+                  content:
+                    '이미 등록되어 있는 이메일입니다.\n다른 이메일을 입력해 주세요.',
+                })
+              );
+              break;
+            case 'birth':
+              dispatch(
+                open({
+                  content:
+                    '올바르지 않은 생일입니다.\n정확한 생일을 입력해 주세요.',
+                })
+              );
+              break;
+            default:
+              dispatch(open({}));
+              break;
+          }
+        });
+    }
   };
 
   return (
@@ -95,104 +180,97 @@ export default function SignUp() {
       <SignUpText>회원가입</SignUpText>
       <Divider />
       <SignUpWrap>
-        <TextField
-          error={false}
+        <NormalTextField
+          id="id"
+          text="아이디"
           value={id}
-          onChange={(e) => setId(e.target.value)}
-          label="아이디"
-          variant="standard"
+          onChangeValue={setId}
+        />
+        <NormalTextField
+          id="password"
+          text="비밀번호"
+          value={password}
+          onChangeValue={setPassword}
+          mode="password"
+        />
+        <NormalTextField
+          id="password2"
+          text="비밀번호 확인"
+          value={password2}
+          onChangeValue={setPassword2}
+          mode="password"
+        />
+        <Divider sx={{ width: '100%' }} />
+        <NormalTextField
+          id="name"
+          text="이름"
+          value={name}
+          onChangeValue={setName}
         />
         <RowWrap>
-          <TextField
-            error={false}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            label="비밀번호"
-            variant="standard"
-          />
-          <TextField
-            error={false}
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
-            label="비밀번호 확인"
-            variant="standard"
-          />
-        </RowWrap>
-        <RowWrap>
-          <TextField
-            error={false}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            label="이름"
-            variant="standard"
-          />
-          <TextField
-            error={false}
+          <NormalTextField
+            id="phone"
+            text="휴대전화"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            label="휴대전화"
-            variant="standard"
+            onChangeValue={setPhone}
           />
-          <CheckBoxWrap>
-            SMS 수신:{' '}
+          <div style={{ marginLeft: '10px' }}>
+            <label htmlFor="phone-check">수신 동의:</label>
             <Checkbox
+              id="phone-check"
               checked={phoneCheck}
               onChange={(e) => setPhoneCheck(e.target.checked)}
             />
-          </CheckBoxWrap>
+          </div>
         </RowWrap>
+
+        <NormalTextField
+          id="address"
+          text="주소"
+          value={address}
+          onChangeValue={setAddress}
+          mode="address"
+        />
+        <NormalTextField
+          id="detail-address"
+          text="상세 주소"
+          value={detailAddress}
+          onChangeValue={setDetailAddress}
+        />
+        <Divider sx={{ width: '100%' }} />
         <RowWrap>
-          <TextField
-            error={false}
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            label="주소"
-            variant="standard"
-          />
-          <TextField
-            error={false}
+          <NormalTextField
+            id="email"
+            text="이메일"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            label="이메일"
-            variant="standard"
+            onChangeValue={setEmail}
           />
-          <CheckBoxWrap>
-            이메일 수신:{' '}
+          <div style={{ marginLeft: '10px' }}>
+            <label htmlFor="email-check">수신 동의:</label>
             <Checkbox
+              id="email-check"
               checked={emailCheck}
               onChange={(e) => setEmailCheck(e.target.checked)}
             />
-          </CheckBoxWrap>
-        </RowWrap>
-        <RowWrap>
-          <TextField
-            error={false}
-            value={birth}
-            onChange={(e) => setBirth(e.target.value)}
-            label="생년월일"
-            variant="standard"
-          />
-          <TextField
-            error={false}
-            value={level}
-            onChange={(e) => setLevel(e.target.value)}
-            label="신분"
-            variant="standard"
-          />
+          </div>
         </RowWrap>
 
-        <CustomButton variant="outlined" onClick={signUpButtonClicked}>
+        <NormalTextField
+          id="birth"
+          text="생일"
+          value={birth}
+          onChangeValue={setBirth}
+        />
+        <NormalTextField
+          id="level"
+          text="직급"
+          value={level}
+          onChangeValue={setLevel}
+        />
+        <Divider sx={{ width: '100%' }} />
+        <SignupButton variant="contained" onClick={signupButtonClicked}>
           회원가입
-        </CustomButton>
-        <Button onClick={() => setpostopen(true)}>주소</Button>
-        {postopen && (
-          <DaumPostcode
-            onComplete={(data) => console.log(data)}
-            autoClose={false}
-            style={{ height: '1000px' }}
-          ></DaumPostcode>
-        )}
-        {msg}
+        </SignupButton>
       </SignUpWrap>
     </BasicStructure>
   );

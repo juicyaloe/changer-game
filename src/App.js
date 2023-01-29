@@ -28,10 +28,12 @@ import MyPage from './pages/mypage/mypage';
 import Cart from './pages/cart/cart';
 import Login from './pages/mypage/login';
 import SignUp from './pages/mypage/signup';
+import Popup from './components/common/popup';
 
 function App() {
   return (
     <Fragment>
+      <Popup />
       <CssBaseline />
       <TopBar />
       <Routes>

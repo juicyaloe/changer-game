@@ -1,4 +1,4 @@
-import { controlError } from './common';
+import { controlError, SignupControlError } from './common';
 
 export async function login(userid: string, password: string) {
   const response = await fetch(
@@ -52,7 +52,7 @@ export async function signup(
     }
   );
 
-  return controlError(response, 201);
+  return SignupControlError(response);
 }
 
 export async function fetchImgList() {
