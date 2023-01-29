@@ -10,7 +10,12 @@ interface PopupState {
   navigateUrl?: string;
 }
 
-const initialState = { isActive: false } as PopupState;
+const initialState = {
+  isActive: false,
+  title: '알림',
+  content: `일시적인 오류가 발생했습니다.\n잠시 후에 시도해주세요.`,
+  navigateUrl: undefined,
+} as PopupState;
 
 const popupSlice = createSlice({
   name: 'popup',

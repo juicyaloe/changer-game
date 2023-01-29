@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { signup } from '../../module/api';
 
-import { open, close } from '../../store/popupSlice';
+import { open } from '../../store/popupSlice';
+import { clear } from '../../store/authSlice';
 
 import BasicStructure from '../../components/structure/basicStructure';
 import Divider from '@mui/material/Divider';
@@ -63,15 +64,11 @@ export default function SignUp() {
   const [emailCheck, setEmailCheck] = useState<boolean>(false);
 
   const validation = (): boolean => {
+    dispatch(clear());
     const phoneReg = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
     const emailReg =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     const dateReg = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/;
-
-    const popupAction = () => {
-      console.log('id');
-      dispatch(close());
-    };
 
     if (id.length < 3) {
       dispatch(open({ content: '아이디를 3자 이상 입력해주세요.' }));

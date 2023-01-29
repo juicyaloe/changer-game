@@ -1,5 +1,8 @@
 import { Fragment } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
+import { useSelector } from 'react-redux';
+
+import type { RootState } from './store/store';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -29,8 +32,12 @@ import Cart from './pages/cart/cart';
 import Login from './pages/mypage/login';
 import SignUp from './pages/mypage/signup';
 import Popup from './components/common/popup';
+import PrivateRoute from './components/common/privateRoute';
 
 function App() {
+  const isLogin =
+    useSelector((state: RootState) => state.auth.token) !== undefined;
+
   return (
     <Fragment>
       <Popup />
@@ -70,8 +77,10 @@ function App() {
         <Route path="/review" element={<Review />} />
         <Route path="/magazine" element={<Magazine />} />
 
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route element={<PrivateRoute isLogin={isLogin} />}>
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/cart" element={<Cart />} />
+        </Route>
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

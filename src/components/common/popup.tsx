@@ -93,20 +93,20 @@ export default function Popup() {
 
   const dispatch = useDispatch();
 
-  return (
-    isActive && (
-      <PopupWrap>
-        <MainBox>
-          <PopupTitle>{title}</PopupTitle>
-          <Divider sx={{ width: '90%' }} />
-          <PopupContent>{content}</PopupContent>
-          <PopupButtonWrap>
-            <Button variant="outlined" onClick={closeFunc}>
-              확인
-            </Button>
-          </PopupButtonWrap>
-        </MainBox>
-      </PopupWrap>
-    )
+  return isActive ? (
+    <PopupWrap>
+      <MainBox>
+        <PopupTitle>{title}</PopupTitle>
+        <Divider sx={{ width: '90%' }} />
+        <PopupContent>{content}</PopupContent>
+        <PopupButtonWrap>
+          <Button variant="outlined" onClick={closeFunc}>
+            확인
+          </Button>
+        </PopupButtonWrap>
+      </MainBox>
+    </PopupWrap>
+  ) : (
+    <></>
   );
 }
