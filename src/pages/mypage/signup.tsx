@@ -1,4 +1,4 @@
-import BasicStructure from '../components/structure/basicStructure';
+import BasicStructure from '../../components/structure/basicStructure';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import styled from '@emotion/styled';
@@ -6,8 +6,10 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
 
-import { signup } from '../module/api';
+import { signup } from '../../module/api';
 import { useNavigate } from 'react-router-dom';
+
+import DaumPostcode from 'react-daum-postcode';
 
 const SignUpWrap = styled.div`
   width: 100%;
@@ -64,6 +66,8 @@ export default function SignUp() {
 
   // TODO: 메시지 제거
   const [msg, setmsg] = useState<string>('회원가입 테스트 메시지');
+
+  const [postopen, setpostopen] = useState<boolean>(false);
 
   const signUpButtonClicked = () => {
     signup(
@@ -180,6 +184,14 @@ export default function SignUp() {
         <CustomButton variant="outlined" onClick={signUpButtonClicked}>
           회원가입
         </CustomButton>
+        <Button onClick={() => setpostopen(true)}>주소</Button>
+        {postopen && (
+          <DaumPostcode
+            onComplete={(data) => console.log(data)}
+            autoClose={false}
+            style={{ height: '1000px' }}
+          ></DaumPostcode>
+        )}
         {msg}
       </SignUpWrap>
     </BasicStructure>

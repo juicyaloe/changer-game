@@ -21,13 +21,13 @@ import Pants from './pages/product/pants';
 import Outer from './pages/product/outer';
 import Under from './pages/product/under';
 import Etc from './pages/product/etc';
-import Event from './pages/event';
-import Magazine from './pages/magazine';
-import Review from './pages/review';
-import MyPage from './pages/mypage';
-import Cart from './pages/cart';
-import Login from './pages/login';
-import SignUp from './pages/signup';
+import Event from './pages/event/event';
+import Magazine from './pages/magazine/magazine';
+import Review from './pages/review/review';
+import MyPage from './pages/mypage/mypage';
+import Cart from './pages/cart/cart';
+import Login from './pages/mypage/login';
+import SignUp from './pages/mypage/signup';
 
 function App() {
   return (

@@ -1,11 +1,11 @@
-import BasicStructure from '../components/structure/basicStructure';
+import BasicStructure from '../../components/structure/basicStructure';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { login } from '../module/api';
+import { login } from '../../module/api';
 import { useNavigate } from 'react-router-dom';
 
 const LoginWrap = styled.div`
