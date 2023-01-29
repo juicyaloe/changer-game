@@ -167,6 +167,7 @@ export default function Login() {
         <CustomTextField
           error={errorPostion === 'password'}
           label="비밀번호"
+          type="password"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
