@@ -74,6 +74,8 @@ interface LoginState {
     is_admin: boolean;
     last_login?: any;
     level: string;
+    recommendation: string;
+    account: string;
     name: string;
     phone: string;
     phone_check: boolean;
@@ -135,6 +137,8 @@ export default function Login() {
               emailCheck: json.user.email_check,
               birth: json.user.date_of_birth,
               level: json.user.level,
+              recommendation: json.user.recommendation,
+              account: json.user.recommendation,
               token: json.refresh,
             })
           );

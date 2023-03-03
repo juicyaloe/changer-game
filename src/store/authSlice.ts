@@ -14,6 +14,8 @@ interface AuthState {
   emailCheck?: boolean;
   birth?: string;
   level?: string;
+  recommendation?: string;
+  account?: string;
   token?: string;
 }
 
@@ -23,22 +25,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuth(
-      state,
-      action: PayloadAction<{
-        id: number;
-        userid: string;
-        name: string;
-        address: string;
-        phone: string;
-        phoneCheck: boolean;
-        email: string;
-        emailCheck: boolean;
-        birth: string;
-        level: string;
-        token: string;
-      }>
-    ) {
+    setAuth(state, action: PayloadAction<AuthState>) {
       state.id = action.payload.id;
       state.userid = action.payload.userid;
       state.name = action.payload.name;
@@ -49,6 +36,8 @@ const authSlice = createSlice({
       state.emailCheck = action.payload.emailCheck;
       state.birth = action.payload.birth;
       state.level = action.payload.level;
+      state.recommendation = action.payload.recommendation;
+      state.account = action.payload.account;
       state.token = action.payload.token;
     },
     clear(state) {
@@ -62,6 +51,8 @@ const authSlice = createSlice({
       state.emailCheck = undefined;
       state.birth = undefined;
       state.level = undefined;
+      state.recommendation = undefined;
+      state.account = undefined;
       state.token = undefined;
     },
   },

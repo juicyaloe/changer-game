@@ -28,7 +28,9 @@ export async function signup(
   email: string,
   email_check: boolean,
   date_of_birth: string,
-  level: string
+  level: string,
+  recommendation: string,
+  account: string
 ) {
   const response = await fetch(
     process.env.REACT_APP_API_DOMAIN + '/auth/signup/',
@@ -48,6 +50,8 @@ export async function signup(
         email_check,
         date_of_birth,
         level,
+        recommendation,
+        account,
       }),
     }
   );
